@@ -19,7 +19,7 @@ class MyDataBase {
 
     fun getProductsLiveData(): LiveData<MutableList<Product>> {
         if (products.size == 0){
-            (0..Random.nextInt(1, names.size)).forEach {
+            (0..names.size-1).forEach{//Random.nextInt(1, names.size)).forEach {
                 products.add(
                     Product(
                         id = it.toLong(),
@@ -57,7 +57,7 @@ class MyDataBase {
     fun delete(product: Product): Boolean{
         val index = products.indexOf(product)
         if (index != -1){
-            if (products.removeAt(index) == product){
+            if (products.removeAt(index-1) == product){
                 getProductsLiveData()
                 return true
             }

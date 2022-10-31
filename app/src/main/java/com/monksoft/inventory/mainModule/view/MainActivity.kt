@@ -2,6 +2,8 @@ package com.monksoft.inventory.mainModule.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.monksoft.inventory.R
@@ -72,9 +74,26 @@ class MainActivity : AppCompatActivity(), OnClickListener {
      * */
     override fun onClick(product: Product) {
         viewModel.setWelcome(true)
+        Snackbar.make(binding.root, product.name, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onLongClick(product: Product) {
         viewModel.deleteProduct(product)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var msg = when(item.itemId){
+            R.id.action_history -> "Ir al historial"
+            R.id.action_exit -> "Salir"
+            else -> "Actccion no encontrada"
+        }
+
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
+        return super.onOptionsItemSelected(item)
     }
 }
